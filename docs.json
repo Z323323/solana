@@ -1,14 +1,21 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "almond",
-  "name": "The Solana Book for Rust Developers",
+  "name": "The Solana Book for Rust Purists",
   "colors": {
     "primary": "#9945ff",
     "light": "#9945ff",
     "dark": "#14f195"
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude", "mcp", "cursor"]
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "mcp",
+      "cursor"
+    ]
   },
   "fonts": {
     "heading": {
@@ -33,29 +40,29 @@
   "navigation": {
     "groups": [
       {
-        "group": "The Rust Book - Almond Version",
+        "group": "The Solana Book for Rust Purists",
         "pages": [
-        
           "foreword",
           "introduction",
           {
             "group": "Ch. 1 - Getting Started",
             "pages": [
-              "chapters/ch-1/installation",
+              "chapters/ch-1/installation"
             ]
           },
           {
             "group": "Ch. 2 - Programming a Guessing Game",
-            "pages": ["chapters/ch-2/guessing-game"]
+            "pages": [
+              "chapters/ch-2/guessing-game"
+            ]
           },
           {
             "group": "Ch. 3 - Common Programming Concepts",
             "pages": [
               "chapters/ch-3/vars-and-mutability",
-              "chapters/ch-3/rust-scopes",
+              "chapters/ch-3/rust-scopes"
             ]
-          },
-          
+          }
         ]
       }
     ]
