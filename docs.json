@@ -1,72 +1,70 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "theme": "almond",
+  "name": "The Solana Book for Rust Developers",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
-  },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
-    }
+    "primary": "#9945ff",
+    "light": "#9945ff",
+    "dark": "#14f195"
   },
   "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
+    "options": ["copy", "view", "chatgpt", "claude", "mcp", "cursor"]
+  },
+  "fonts": {
+    "heading": {
+      "family": "Inter"
+    },
+    "body": {
+      "family": "Inter"
+    }
+  },
+  "background": {
+    "decoration": "gradient"
+  },
+  "favicon": "/assets/favicon.svg",
+  "logo": {
+    "light": "/assets/logo/light.svg",
+    "dark": "/assets/logo/dark.svg"
+  },
+  "css": "style.css",
+  "interaction": {
+    "drilldown": false
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "The Rust Book - Almond Version",
+        "pages": [
+        
+          "foreword",
+          "introduction",
+          {
+            "group": "Ch. 1 - Getting Started",
+            "pages": [
+              "chapters/ch-1/installation",
+            ]
+          },
+          {
+            "group": "Ch. 2 - Programming a Guessing Game",
+            "pages": ["chapters/ch-2/guessing-game"]
+          },
+          {
+            "group": "Ch. 3 - Common Programming Concepts",
+            "pages": [
+              "chapters/ch-3/vars-and-mutability",
+              "chapters/ch-3/rust-scopes",
+            ]
+          },
+          
+        ]
+      }
     ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/_Z561",
+      "github": "https://github.com/Z323323",
+      "telegram": "https://t.me/Z_561"
     }
   }
 }
