@@ -25,9 +25,6 @@
       "family": "Inter"
     }
   },
-  "background": {
-    "decoration": "gradient"
-  },
   "favicon": "/assets/logo/solana.png",
   "logo": {
     "light": "/assets/logo/solana_black.png",
@@ -43,24 +40,25 @@
         "group": "The Solana Book for Rust Purists",
         "pages": [
           "foreword",
-          "introduction",
+          "introduction"
+          ]
+      },
+      {
+        "group": "Concepts",
+        "icon": "graduation-cap",
+        "pages": [
           {
-            "group": "Ch. 1 - Getting Started",
-            "pages": [
-              "chapters/ch-1/installation"
-            ]
-          },
-          {
-            "group": "Ch. 2 - Programming a Guessing Game",
-            "pages": [
-              "chapters/ch-2/guessing-game"
-            ]
-          },
-          {
-            "group": "Ch. 3 - Common Programming Concepts",
-            "pages": [
-              "chapters/ch-3/vars-and-mutability",
-              "chapters/ch-3/rust-scopes"
+          "group": "Ch. 1 - Getting Started",
+          "pages": [
+            "chapters/ch-1/installation",
+            "chapters/ch-1/hello-world",
+            "chapters/ch-1/hello-cargo",
+            "chapters/ch-1/appendix-e",
+            "chapters/ch-1/appendix-a-pt-1",
+            "chapters/ch-1/cargo-toml-vs-lock",
+            "chapters/ch-1/package-id-specs",
+            "chapters/ch-1/naming-conventions",
+            "chapters/ch-1/appendix-d"
             ]
           }
         ]
