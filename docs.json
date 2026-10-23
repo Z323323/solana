@@ -3,7 +3,7 @@
   "theme": "almond",
   "name": "The Solana Book for Rust Purists",
   "colors": {
-    "primary": "#03e1ff",
+    "primary": "#9945ff",
     "light": "#14f195",
     "dark": "#9945ff"
   },

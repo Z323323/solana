@@ -1,6 +1,5 @@
 /* style.css */
 
-/*
 #content-container {
   background-image: url('/assets/images/solana_gradient.png') !important;
   background-size: cover !important;
@@ -12,16 +11,10 @@
 html.dark #content-container {
   background-image: linear-gradient(rgba(12, 10, 16, 0.5), rgba(12, 10, 16, 0.5)), url('/assets/images/solana_gradient.png') !important;
 }
-*/
 
 footer::after {
   content: "With 💙 by Z561";
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #9CA3AF;
-}
-
-.dark footer::after {
-  color: #4B5563;
 }
