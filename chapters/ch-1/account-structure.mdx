@@ -45,7 +45,7 @@ description: "[[solana.com/docs/core/accounts](https://solana.com/docs/core/acco
 >    <div>
 >    Every account on Solana is assigned an 'owner' (a specific smart contract/program). This rule dictates that only this owning program has the authority to alter the data stored inside the account or withdraw money (debit lamports).<br /><br />
 >
->    While withdrawing funds is strictly locked down, depositing funds is open. Any program or user can send money (credit lamports) to your account, provided the transaction flags the account as 'writable' (capable of receiving balance changes). It is exactly like a real-world bank account: anyone can deposit money into your account if they know your public address, but they cannot withdraw it.
+>    While withdrawing funds is strictly locked down, depositing funds is open. Any program or user can send money (credit lamports) to your account, provided the transaction flags the account as 'writable' (capable of receiving balance changes).
 >    </div>
 >  </div>
 >- **Account storage**: Every account must hold a refundable minimum lamport balance proportional to its data size to remain onchain.

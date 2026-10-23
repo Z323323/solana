@@ -1,15 +1,13 @@
 /* style.css */
 
-/* 1. Light Mode: Bottom-left to top-right 3-color Solana gradient */
 #content-container {
-  background-image: linear-gradient(45deg, #9945FF 0%, #03E1FF 50%, #14F195 100%) !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), linear-gradient(45deg, #9945FF 0%, #763ADF 25%, #0284C7 50%, #0CC894 75%, #14F195 100%) !important;
   background-attachment: fixed !important; 
   background-color: transparent !important;
 }
 
-/* 2. Dark Mode: Bottom-left to top-right gradient with 50% dark overlay */
 html.dark #content-container {
-  background-image: linear-gradient(rgba(12, 10, 16, 0.5), rgba(12, 10, 16, 0.5)), linear-gradient(45deg, #9945FF 0%, #03E1FF 50%, #14F195 100%) !important;
+  background-image: linear-gradient(rgba(12, 10, 16, 0.5), rgba(12, 10, 16, 0.5)), linear-gradient(45deg, #9945FF 0%, #763ADF 25%, #0284C7 50%, #0CC894 75%, #14F195 100%) !important;
   background-attachment: fixed !important; 
 }
 
