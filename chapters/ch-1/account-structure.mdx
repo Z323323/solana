@@ -2,8 +2,9 @@
 title: "Account Structure"
 mode: "wide"
 sidebarTitle: "1.1 - Account Structure"
-description: "[[solana.com/docs/core/accounts](https://solana.com/docs/core/accounts)], [[solana.com/docs/core/accounts/account-structure](https://solana.com/docs/core/accounts/account-structure)]"
 ---
+
+## [[solana.com/docs/core/accounts](https://solana.com/docs/core/accounts)]
 
 >An account is Solana's fundamental data unit for storing state. The network stores all state in a key-value store where each key is a 32-byte address and each value is an account.
 
@@ -40,8 +41,10 @@ description: "[[solana.com/docs/core/accounts](https://solana.com/docs/core/acco
 >- **Structure**: Every account has the same five fields: lamports, data, owner, executable, rent_epoch.
 >- **Address**: Each account is identified by a unique 32-byte address (either an Ed25519 public key or a Program Derived Address).
 >- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
->  <div className="flex gap-3 ml-1 text-[#9945FF] dark:text-[#14F195]">
->    <span>↳</span>
+>- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
+>- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
+>  <div className="relative pl-8 text-[#9945FF] dark:text-[#14F195]">
+>    <span className="absolute left-0 top-0">↳</span>
 >    <div>
 >    Every account on Solana is assigned an 'owner' (a specific smart contract/program). This rule dictates that only this owning program has the authority to alter the data stored inside the account or withdraw money (debit lamports).<br /><br />
 >
@@ -60,3 +63,5 @@ description: "[[solana.com/docs/core/accounts](https://solana.com/docs/core/acco
 | Account base storage overhead | 64 bytes per account | `TRANSACTION_ACCOUNT_BASE_SIZE` |
 | Address size | 32 bytes (Ed25519 public key) | -- |
 | Minimum storage balance (formula) | `(account_size + 128) * 3480 lamports/byte-year * 2 years` | `minimum_balance()` |
+
+## [[solana.com/docs/core/accounts/account-structure](https://solana.com/docs/core/accounts/account-structure)]
