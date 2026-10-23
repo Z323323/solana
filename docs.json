@@ -25,13 +25,12 @@
       "family": "Inter"
     }
   },
-  "background": {
-    "decoration": "gradient"
-  },
-  "favicon": "/assets/favicon.svg",
+  
+  
+  "favicon": "/assets/logo/solana.png",
   "logo": {
-    "light": "/assets/logo/light.svg",
-    "dark": "/assets/logo/dark.svg"
+    "light": "/assets/logo/solana_black.png",
+    "dark": "/assets/logo/solana.png"
   },
   "css": "style.css",
   "interaction": {

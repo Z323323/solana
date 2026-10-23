@@ -1,0 +1,47 @@
+/* style.css */
+
+/* 1. Apply the gradient to both the central text window and the sidebar menu */
+#content-container,
+#sidebar-content {
+  background-image: url('/assets/images/solana_gradient.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  /* Fixed attachment creates a seamless continuous image across both windows */
+  background-attachment: fixed !important; 
+  background-color: transparent !important;
+}
+
+/* Dark Mode: Reduced dark overlay tint to reveal more gradient */
+html.dark #content-container,
+html.dark #sidebar-content {
+  background-image: linear-gradient(rgba(12, 10, 16, 0.5), rgba(12, 10, 16, 0.5)), url('/assets/images/solana_gradient.png') !important;
+}
+
+/* Light mode book title (eyebrow): Solana Purple */
+.eyebrow {
+  color: #9945FF !important;
+}
+
+/* Dark mode book title (eyebrow): Solana Green */
+html.dark .eyebrow {
+  color: #14F195 !important;
+}
+
+/* Light mode headings: Solana Purple */
+h1, h2, h3, h4, h5, h6,
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  color: #9945FF !important;
+}
+
+/* Dark mode headings: Solana Green */
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+html.dark .prose h1, html.dark .prose h2, html.dark .prose h3, html.dark .prose h4, html.dark .prose h5, html.dark .prose h6 {
+  color: #14F195 !important;
+}
+
+footer::after {
+  content: "With 💙 by Z561";
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
