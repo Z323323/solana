@@ -3,9 +3,9 @@
   "theme": "almond",
   "name": "The Solana Book for Rust Purists",
   "colors": {
-    "primary": "#9945ff",
-    "light": "#9945ff",
-    "dark": "#14f195"
+    "primary": "#03e1ff",
+    "light": "#14f195",
+    "dark": "#9945ff"
   },
   "contextual": {
     "options": [
@@ -25,12 +25,13 @@
       "family": "Inter"
     }
   },
-  
-  
+  "background": {
+    "decoration": "gradient"
+  },
   "favicon": "/assets/logo/solana.png",
   "logo": {
     "light": "/assets/logo/solana_black.png",
-    "dark": "/assets/logo/solana.png"
+    "dark": "/assets/logo/solana_white.png"
   },
   "css": "style.css",
   "interaction": {
