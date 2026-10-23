@@ -48,17 +48,12 @@
         "icon": "graduation-cap",
         "pages": [
           {
-          "group": "Ch. 1 - Getting Started",
+          "group": "Ch. 1 - Accounts",
           "pages": [
-            "chapters/ch-1/installation",
-            "chapters/ch-1/hello-world",
-            "chapters/ch-1/hello-cargo",
-            "chapters/ch-1/appendix-e",
-            "chapters/ch-1/appendix-a-pt-1",
-            "chapters/ch-1/cargo-toml-vs-lock",
-            "chapters/ch-1/package-id-specs",
-            "chapters/ch-1/naming-conventions",
-            "chapters/ch-1/appendix-d"
+            "chapters/ch-1/account-structure",
+            "chapters/ch-1/account-types",
+            "chapters/ch-1/modification-rules",
+            "chapters/ch-1/account-runtime"
             ]
           }
         ]

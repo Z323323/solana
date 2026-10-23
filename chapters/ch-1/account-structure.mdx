@@ -1,0 +1,62 @@
+---
+title: "Account Structure"
+mode: "wide"
+sidebarTitle: "1.1 - Account Structure"
+description: "[[solana.com/docs/core/accounts](https://solana.com/docs/core/accounts)], [[solana.com/docs/core/accounts/account-structure](https://solana.com/docs/core/accounts/account-structure)]"
+---
+
+>An account is Solana's fundamental data unit for storing state. The network stores all state in a key-value store where each key is a 32-byte address and each value is an account.
+
+<div style={{ display: 'flex', justifyContent: 'center', margin: '2.5rem 0' }}>
+  {/* The Unified Outer Box */}
+  <div 
+    className="rounded-xl flex flex-col" 
+    style={{ 
+      width: '100%', 
+      border: '1px solid color-mix(in srgb, currentColor 30%, transparent)',
+      padding: '1rem'
+    }}>
+    
+    {/* Transparent Title Area */}
+    <div 
+      className="text-sm font-medium" 
+      style={{ 
+        paddingBottom: '0.8rem',
+        color: 'color-mix(in srgb, currentColor 60%, transparent)'
+      }}>
+      Figure 1.1.1
+    </div>
+    
+    {/* The Image */}
+    <img 
+      src="/assets/images/accounts.png" 
+      style={{ width: '100%', margin: 0, display: 'block', borderRadius: '0.25rem' }} 
+    />
+  </div>
+</div>
+
+## Key facts
+
+>- **Structure**: Every account has the same five fields: lamports, data, owner, executable, rent_epoch.
+>- **Address**: Each account is identified by a unique 32-byte address (either an Ed25519 public key or a Program Derived Address).
+>- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
+>  <div className="flex gap-3 ml-1 text-[#9945FF] dark:text-[#14F195]">
+>    <span>↳</span>
+>    <div>
+>    Every account on Solana is assigned an 'owner' (a specific smart contract/program). This rule dictates that only this owning program has the authority to alter the data stored inside the account or withdraw money (debit lamports).<br /><br />
+>
+>    While withdrawing funds is strictly locked down, depositing funds is open. Any program or user can send money (credit lamports) to your account, provided the transaction flags the account as 'writable' (capable of receiving balance changes). It is exactly like a real-world bank account: anyone can deposit money into your account if they know your public address, but they cannot withdraw it.
+>    </div>
+>  </div>
+>- **Account storage**: Every account must hold a refundable minimum lamport balance proportional to its data size to remain onchain.
+
+## Limits
+
+| Limit | Value | Source |
+| :--- | :--- | :--- |
+| Max account data size | 10 MiB (10,485,760 bytes) | `MAX_ACCOUNT_DATA_LEN` |
+| Max data growth per instruction | 10 KiB (10,240 bytes) | `MAX_PERMITTED_DATA_INCREASE` |
+| Max data growth per transaction | 20 MiB (20,971,520 bytes) | `MAX_ACCOUNT_DATA_GROWTH_PER_TRANSACTION` |
+| Account base storage overhead | 64 bytes per account | `TRANSACTION_ACCOUNT_BASE_SIZE` |
+| Address size | 32 bytes (Ed25519 public key) | -- |
+| Minimum storage balance (formula) | `(account_size + 128) * 3480 lamports/byte-year * 2 years` | `minimum_balance()` |
