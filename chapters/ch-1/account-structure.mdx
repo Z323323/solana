@@ -6,24 +6,24 @@ sidebarTitle: "1.1 - Account Structure"
 
 ## [[solana.com/docs/core/accounts](https://solana.com/docs/core/accounts)]
 
->An account is Solana's fundamental data unit for storing state. The network stores all state in a key-value store where each key is a 32-byte address and each value is an account.
+>An **account** is Solana's fundamental data unit for storing state. The network stores all state in a key-value store where each key is a 32-byte (256-bit) address and each value is an account.
 
-<div style={{ display: 'flex', justifyContent: 'center', margin: '2.5rem 0' }}>
+<div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
   {/* The Unified Outer Box */}
   <div 
-    className="rounded-xl flex flex-col" 
+    className="rounded-xl flex flex-col bg-white/10 backdrop-blur-md" 
     style={{ 
       width: '100%', 
-      border: '1px solid color-mix(in srgb, currentColor 30%, transparent)',
-      padding: '1rem'
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      padding: '1.25rem'
     }}>
     
     {/* Transparent Title Area */}
     <div 
       className="text-sm font-medium" 
       style={{ 
-        paddingBottom: '0.8rem',
-        color: 'color-mix(in srgb, currentColor 60%, transparent)'
+        paddingBottom: '1.25rem',
+        color: 'color-mix(in srgb, currentColor 100%, transparent)'
       }}>
       Figure 1.1.1
     </div>
@@ -31,27 +31,89 @@ sidebarTitle: "1.1 - Account Structure"
     {/* The Image */}
     <img 
       src="/assets/images/accounts.png" 
-      style={{ width: '100%', margin: 0, display: 'block', borderRadius: '0.25rem' }} 
+      style={{ width: '100%', margin: 0, display: 'block' }} 
     />
   </div>
 </div>
 
 ## Key facts
 
->- **Structure**: Every account has the same five fields: lamports, data, owner, executable, rent_epoch.
->- **Address**: Each account is identified by a unique 32-byte address (either an Ed25519 public key or a Program Derived Address).
->- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
->- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
->- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
+>- **Structure**: Every account has the same five fields: **lamports**, **data**, **owner**, **executable**, **rent_epoch**.
+>- **Address**: Each account is identified by a unique 32-byte address (either an **Ed25519 public key** or a Program Derived Address—**PDA**).
+>- **Ownership**: Only the account's owner <u>program</u> can modify its data or debit lamports. Any **program** can credit lamports to any writable account.
 >  <div className="relative pl-8 text-[#9945FF] dark:text-[#14F195]">
 >    <span className="absolute left-0 top-0">↳</span>
 >    <div>
->    Every account on Solana is assigned an 'owner' (a specific smart contract/program). This rule dictates that only this owning program has the authority to alter the data stored inside the account or withdraw money (debit lamports).<br /><br />
+>    1. Every account on Solana is assigned an 'owner' (<u>a specific program</u>—on Solana, <u>the terms 'program' and 'smart contract' are completely synonymous</u> and used interchangeably). This rule dictates that only this owning program has the authority to alter the data stored inside the account or withdraw money (debit lamports).
+>    2. While withdrawing funds is strictly locked down, depositing funds is open. Any program or user can send money (credit lamports) to your account, provided the transaction flags the account as 'writable' (capable of receiving balance changes).
 >
->    While withdrawing funds is strictly locked down, depositing funds is open. Any program or user can send money (credit lamports) to your account, provided the transaction flags the account as 'writable' (capable of receiving balance changes).
+>    At first glance, '1.' appears to be a chicken-and-egg paradox: if every account requires a program to own it, and every program is itself an account, how can anything exist in the first place?
+>
+>    1. The statement '<b>every program is itself an account</b>' is literal: <u>programs do not exist as distinct entities outside the account model</u>. Unlike architectures such as Ethereum—where smart contracts are specialized runtime objects with their own internal storage trie—<u>Solana treats programs as <b>stateless data accounts</b> containing compiled bytecode</u>.
+>
+>    <Info>
+>    A <u>program account</u> uses the exact same underlying Rust struct as any standard Solana account (`Account` or `AccountInfo`). It has five fields:
+>
+>    ```rust Solana Account
+>    pub struct Account {
+>        pub lamports: u64,
+>        pub data: Vec<u8>,
+>        pub owner: Pubkey,
+>        pub executable: bool,
+>        pub rent_epoch: Epoch,
+>    }
+>    ```
+>
+>    Because virtually all modern Solana smart contracts are deployed using the <u>BPF Upgradeable Loader</u> (`BPFLoaderUpgradeab1e11111111111111111111111`), <u>a deployed program is actually split across two distinct accounts: the <u>Program Account</u> and the <u>ProgramData</u> Account</u>.
+>
+>    1.
+>    2.
+>    </Info>
+>    ```rust Solana Account
+>    pub struct Account {
+>        pub lamports: u64,
+>        pub data: Vec<u8>,
+>        pub owner: Pubkey,
+>        pub executable: bool,
+>        pub rent_epoch: Epoch,
+>    }
+>    ```
+>    2. An account becomes a program through the combination of two specific fields:
+>
+>       1. <b>The `executable` flag is set to `true`</b>.<br />
+>          <Info>
+>          When a transaction invokes an instruction targeted at a public key, the Solana runtime inspects this flag. If `executable == false`, the runtime rejects the execution attempt immediately. If `executable == true`, the runtime confirms: 'This public key represents genuine, verified program bytecode'. <u>It proceeds to load the code and delegates execution to an on-chain interpreter or JIT compiler, passing the account's raw byte payload (`account.data`) to the Solana Virtual Machine (<b>SVM</b>):</u>
+>          - <b>SBF Bytecode</b>: <u>The bytes in `data` are compiled machine code based on extended Berkeley Packet Filter (eBPF/**SBF**)</u>.
+>          - <b>Just-In-Time (JIT) Compilation</b>: Rather than slowly interpreting instructions one by one, high-performance <u>Solana validators compile that SBF bytecode directly into native x86-64 machine instructions on the fly</u> (or cache the compiled version).
+>          - <b>Execution</b>: <u>The runtime jumps directly to the entry point function within that compiled binary, passing in the remaining accounts and parameters provided by the transaction</u>.
+>          </Info>
+>       2. <b>The owner is set to an on-chain Loader</b>: <u>A program account is owned not by standard users, but by a native runtime loader</u> (such as the BPF Upgradeable Loader).
+>
+>    Solana breaks this loop through native runtime programs, which are hardcoded directly into the validator core software at genesis rather than deployed as regular accounts:
+>
+>    The System Program: Standard user wallets (keypairs) and newly initialized accounts are owned by the native System Program (address 11111111111111111111111111111111). When a standard wallet is created or funded, the System Program acts as its default owner.
+>
+>    Loader Programs: Smart contracts on Solana are simply data accounts marked as executable and owned by a native runtime loader (such as the BPF Upgradeable Loader). Because these loaders are baked directly into the Solana client architecture, they serve as the root authority for executable code without needing another contract above them.
+>
+>    Transfer of Ownership: To create a custom state account for your dapp, the System Program allocates the space and then transfers the ownership of that account to your custom deployed program's public key. From that moment on, only your program has the cryptographic authority to mutate that data or drain its balance.
+>
+>    While debiting funds and mutating state are strictly restricted to the owning program, depositing funds is open to everyone: any user or external contract can credit lamports to any account, provided the account is marked as writable in the transaction.
 >    </div>
 >  </div>
 >- **Account storage**: Every account must hold a refundable minimum lamport balance proportional to its data size to remain onchain.
+>  <div className="relative pl-8 text-[#9945FF] dark:text-[#14F195]">
+>    <span className="absolute left-0 top-0">↳</span>
+>    <div>
+>    - <b>The Zero-Cost State Attack Vector</b>: If creating persistent on-chain state only incurred a one-time transaction fee (a fraction of a cent), an attacker with a few hundred dollars could issue millions of instructions allocating maximum-size accounts. Because blockchain storage is permanent by default, those bytes cannot be garbage-collected without a protocol-level rule. The attacker would pay once, but every validator on the network would be forced to carry that payload indefinitely.
+>    - <b>RAM Saturation and Out-Of-Memory (OOM) Crashes</b>: Solana is engineered around sub-second finality and around 200ms slot times. To achieve parallel transaction execution via the Sealevel runtime, the validator engine cannot afford slow random disk lookups:
+>
+>      - <b>AccountsDB Architecture</b>: Solana validators maintain account indices, public key lookups, and active account structures directly in high-speed RAM and memory-mapped files (mmap).
+>      - <b>The Memory Cliff</b>: If an attacker floods the state, the memory footprint of AccountsDB surges past physical RAM limits (typically 256 GB–512 GB on validator machines).
+>      - <b>OOM Killer</b>: When the operating system runs out of physical memory, the Linux kernel's Out-Of-Memory (OOM) Killer intervenes and forcibly terminates the solana-validator process.
+>    - 
+>       
+>    </div>
+>  </div>
 
 ## Limits
 

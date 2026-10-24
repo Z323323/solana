@@ -1,19 +1,79 @@
 /* style.css */
 
 #content-container {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), linear-gradient(45deg, #9945FF 0%, #763ADF 25%, #0284C7 50%, #0CC894 75%, #14F195 100%) !important;
-  background-attachment: fixed !important; 
-  background-color: transparent !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), linear-gradient(45deg, #9945FF 0%, #763ADF 25%, #0284C7 50%, #0CC894 75%, #14F195 100%) !important;
+  background-attachment: fixed !important;
 }
 
 html.dark #content-container {
   background-image: linear-gradient(rgba(12, 10, 16, 0.5), rgba(12, 10, 16, 0.5)), linear-gradient(45deg, #9945FF 0%, #763ADF 25%, #0284C7 50%, #0CC894 75%, #14F195 100%) !important;
-  background-attachment: fixed !important; 
+  background-attachment: fixed !important;
+}
+
+/* ==========================================================================
+   Markdown Blockquotes (">") Border Inversion
+   ========================================================================== */
+
+/* Light / White Mode: Black vertical line */
+html:not(.dark) blockquote,
+html:not(.dark) .prose blockquote {
+  border-left-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Dark / Black Mode: White vertical line */
+html.dark blockquote,
+html.dark .prose blockquote {
+  border-left-color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Force all nested ordered lists in Mintlify to remain numbers */
+.prose ol > li > ol,
+.prose ol > li > ol > li > ol {
+  list-style-type: decimal !important;
+}
+
+u {
+  text-decoration: none; /* Strips out the default, problematic underline */
+  border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+}
+
+/* Ultra-translucent Callout Containers (<Info>, <Note>, <Tip>, <Warning>) */
+html .callout,
+html [data-callout],
+html div[class*="callout"],
+html div[role="alert"] {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Outer Code Window: Glassmorphism */
+html .code-block,
+html .code-group {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Keep all inner containers 100% background-free */
+html body .code-block :is(div, pre, code, .shiki),
+html body .code-group :is(div, pre, code, .shiki) {
+  background: none !important;
+}
+
+html.dark .code-block code,
+html.dark .code-group code {
+  filter: contrast(150%) saturate(120%) !important;
+  opacity: 1 !important;
 }
 
 footer::after {
-  content: "With 💙 by Z561";
+  content: "With 💜 by Z561";
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
+  color: #9CA3AF;
+}
+
+.dark footer::after {
+  content: "With 💚 by Z561";
+  color: #4B5563;
 }
