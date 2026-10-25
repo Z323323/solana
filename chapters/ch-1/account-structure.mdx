@@ -70,12 +70,24 @@ sidebarTitle: "1.1 - Account Structure"
 >    2.
 >    </Info>
 >    ```rust Solana Account
->    pub struct Account {
->        pub lamports: u64,
->        pub data: Vec<u8>,
->        pub owner: Pubkey,
->        pub executable: bool,
->        pub rent_epoch: Epoch,
+>    struct CustomSmartPointer {
+>        data: String,
+>    }
+>    
+>    impl Drop for CustomSmartPointer {
+>        fn drop(&mut self) {
+>            println!("Dropping CustomSmartPointer with data `{}`!", self.data);
+>        }
+>    }
+>    
+>    fn main() {
+>        let c = CustomSmartPointer {
+>            data: String::from("my stuff"),
+>        };
+>        let d = CustomSmartPointer {
+>            data: String::from("other stuff"),
+>        };
+>        println!("CustomSmartPointers created");
 >    }
 >    ```
 >    2. An account becomes a program through the combination of two specific fields:

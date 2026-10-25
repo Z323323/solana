@@ -37,6 +37,13 @@ u {
   border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent);
 }
 
+/* Backticks */
+html .prose :not(pre) > code,
+html :not(pre) > code {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
 /* Ultra-translucent Callout Containers (<Info>, <Note>, <Tip>, <Warning>) */
 html .callout,
 html [data-callout],
@@ -53,15 +60,69 @@ html .code-group {
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Keep all inner containers 100% background-free */
 html body .code-block :is(div, pre, code, .shiki),
 html body .code-group :is(div, pre, code, .shiki) {
   background: none !important;
 }
 
+/*
 html.dark .code-block code,
 html.dark .code-group code {
-  filter: contrast(150%) saturate(120%) !important;
+  filter: contrast(150%) saturate(200%) !important;
+  opacity: 1 !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+*/
+
+html.dark .code-block pre span,
+html.dark .code-group pre span {
+  color: oklch(from var(--shiki-dark, currentColor) calc(l * 1) calc(c * 2.75) h) !important;
+  opacity: 1 !important;
+}
+
+/*
+html:not(.dark) .code-block pre span,
+html:not(.dark) .code-group pre span {
+  color: oklch(from var(--shiki-dark, currentColor) calc(l * 0.8) calc(c * 2.75) h) !important;
+  opacity: 1 !important;
+}
+*/
+
+/* ==========================================================================
+   Light Mode: True Custom "Dark-Plus" Mapping
+   ========================================================================== */
+
+/* (White/Gray -> Dark Charcoal) */
+html:not(.dark) .code-block pre,
+html:not(.dark) .code-group pre,
+html:not(.dark) .code-block pre span[style*="D4D4D4" i],
+html:not(.dark) .code-block pre span[style*="CCCCCC" i],
+html:not(.dark) .code-block pre span[style*="FFFFFF" i],
+html:not(.dark) .code-group pre span[style*="D4D4D4" i],
+html:not(.dark) .code-group pre span[style*="CCCCCC" i],
+html:not(.dark) .code-group pre span[style*="FFFFFF" i] {
+  color: #1a1a1a !important;
+}
+
+/* (Pale Yellow -> Strong Ochre) */
+html:not(.dark) .code-block pre span[style*="DCDCAA" i],
+html:not(.dark) .code-group pre span[style*="DCDCAA" i] {
+  color: #b58900 !important; /* Giallo ocra forte */
+}
+
+html.dark .code-block pre span[style*="CE9178" i],
+html.dark .code-group pre span[style*="CE9178" i] {
+  color: #c778ff !important;
+}
+
+html:not(.dark) .code-block pre span[style*="CE9178" i],
+html:not(.dark) .code-group pre span[style*="CE9178" i] {
+  color: #9943d6 !important; 
+}
+
+html:not(.dark) .code-block pre span,
+html:not(.dark) .code-group pre span {
+  color: oklch(from var(--shiki-dark, currentColor) calc(l * 0.65) calc(c * 2.75) h) !important;
   opacity: 1 !important;
 }
 

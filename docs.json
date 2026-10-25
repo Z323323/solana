@@ -30,6 +30,14 @@
     "light": "/assets/logo/solana_black.png",
     "dark": "/assets/logo/solana_white.png"
   },
+  "styling": {
+    "codeblocks": {
+      "theme": {
+        "light": "dark-plus",
+        "dark": "dark-plus"
+      }
+    }
+  },
   "css": "style.css",
   "interaction": {
     "drilldown": false
