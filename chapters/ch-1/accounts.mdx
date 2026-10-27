@@ -40,13 +40,13 @@ sidebarTitle: "1.0 - Accounts"
 
 >- **Structure**: <u>Every account has the same five fields</u>: **lamports**, **data**, **owner**, **executable**, **rent_epoch**.
 >  <div className="relative pl-8">
->    <span className="absolute left-0 top-0">↳</span>
+>    <span className="absolute left-0 top-0">└─</span>
 >    <div>
 >    [[solana.com/docs/core/accounts/account-structure](https://solana.com/docs/core/accounts/account-structure)]
 >    </div>
 >  </div>
 >  <div className="colored-block relative pl-8 text-[#3C5FD3] dark:text-[#07A6AE]">
->    <span className="absolute left-0 top-0">↳</span>
+>    <span className="absolute left-0 top-0">└─●</span>
 >    <div>
 >    - `lamports`: The balance of SOL held by the account. A lamport is the smallest fractional unit of SOL.
 >      - $1\text{ lamport} = 0.00\text{\_}000\text{\_}000\text{\_}1\text{ SOL} = 1 \cdot 10^{- 9}\text{ SOL.}$
@@ -55,8 +55,8 @@ sidebarTitle: "1.0 - Accounts"
 >      - <b>System Accounts (Standard Wallets)</b>: <u>The `data` field is completely empty (0 bytes).</u> Your native SOL balance is tracked in the account's metadata header, not inside this data buffer.
 >      - <b>Data Accounts (PDAs & Token Accounts)</b>: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet address, and your current token balance.
 >        <div className="relative pl-8">
->          <div style={{ marginBottom: "4px" }}>
->            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓
+>          <div style={{ lineHeight: "9px", marginBottom: "10px" }}>
+>            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >          </div>
 >          <Accordion title="Program-Derived Data Accounts">
 >          <u>In short, it either holds passive data or active code.</u> If you think about it carefully, this leads to a fundamental architectural conclusion: <u>since the `data` field can hold either account state or program bytecode, a deployed smart contract is entirely stateless. The executable bytecode is stored in one account (the <b>Program Account</b>), and the contract must necessarily store its data in entirely separate accounts (<b>Data Accounts</b>).</u>
@@ -79,15 +79,15 @@ sidebarTitle: "1.0 - Accounts"
 >             3. The program verifies that the provided Data Account address matches the expected PDA derivation (confirming it is the correct account).
 >             4. Because the program is the official owner of that Data Account, the runtime grants the program write-access to update the level in the Data Account's data buffer.
 >          </Accordion>
->          <div style={{ lineHeight: "1", marginBottom: "2px" }}>
->            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑
+>          <div style={{ lineHeight: "0px" }}>
+>            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >          </div>
 >        </div>
 >      - <b>Program Accounts (Smart Contracts)</b>: <u>The field holds active executable bytecode. When you deploy a program, the compiled sBPF binary (the _.so_ file) is stored directly inside this data buffer so the network can execute it.</u><br />
->        <div style={{ marginBottom: "4px" }}>
->          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓
+>        <div style={{ lineHeight: "9px", marginBottom: "10px" }}>
+>          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >        </div>
->        <Accordion>
+>        <Accordion title="Solana Program Account Structure and BPF Upgradeable Loader Architecture">
 >
 >        A program account uses the exact same underlying Rust struct as any standard Solana account (`Account` or `AccountInfo`). It has five fields:
 >
@@ -125,7 +125,7 @@ sidebarTitle: "1.0 - Accounts"
 > - **Address**: Each account is identified by a unique 32-byte address (either an **Ed25519** public key or a PDA), <u>displayed as a **Base58**-encoded string</u>.
 >
 > <div className="colored-block relative pl-8 text-[#3C5FD3] dark:text-[#07A6AE]">
->   <span className="absolute left-0 top-0">↳</span>
+>   <span className="absolute left-0 top-0">└─</span>
 >   <div>
 >     <Accordion title="How Base58 Works">
 >     
@@ -207,7 +207,7 @@ sidebarTitle: "1.0 - Accounts"
 >
 >- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
 >  <div className="colored-block relative pl-8 text-[#3C5FD3] dark:text-[#07A6AE]">
->    <span className="absolute left-0 top-0">↳</span>
+>    <span className="absolute left-0 top-0">└──</span>
 >    <div>
 >    1. Every account on Solana is assigned an 'owner' (<u>a specific program</u>—on Solana, the terms 'program' and 'smart contract' are completely synonymous and used interchangeably). This rule dictates that only this owning program has the authority to alter the data stored inside the account or withdraw money (debit lamports).
 >    2. While withdrawing funds is strictly locked down, depositing funds is open. Any program or user can send money (credit lamports) to your account, provided the transaction flags the account as 'writable' (capable of receiving balance changes).
@@ -239,7 +239,7 @@ sidebarTitle: "1.0 - Accounts"
 >  </div>
 >- **Account storage**: Every account must hold a refundable minimum lamport balance proportional to its data size to remain onchain.
 >  <div className="relative pl-8 text-[#3C5FD3] dark:text-[#07A6AE]">
->    <span className="absolute left-0 top-0">↳</span>
+>    <span className="absolute left-0 top-0">└─●</span>
 >    <div>
 >    - <b>The Zero-Cost State Attack Vector</b>: If creating persistent on-chain state only incurred a one-time transaction fee (a fraction of a cent), an attacker with a few hundred dollars could issue millions of instructions allocating maximum-size accounts. Because blockchain storage is permanent by default, those bytes cannot be garbage-collected without a protocol-level rule. The attacker would pay once, but every validator on the network would be forced to carry that payload indefinitely.
 >    - <b>RAM Saturation and Out-Of-Memory (OOM) Crashes</b>: Solana is engineered around sub-second finality and around 200ms slot times. To achieve parallel transaction execution via the Sealevel runtime, the validator engine cannot afford slow random disk lookups:
