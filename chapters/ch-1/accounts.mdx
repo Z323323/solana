@@ -53,7 +53,7 @@ sidebarTitle: "1.0 - Accounts"
 >      - $1\text{ SOL} = 1\text{\_}000\text{\_}000\text{\_}000\text{ lamports} = 1 \cdot 10^{9}\text{ lamports.}$
 >    - <div className="reset-theme">`data`: **Account state** or **program bytecode**. Max 10 MiB. Owner-writable only.</div>
 >      - <b>System Accounts (Standard Wallets)</b>: <u>The `data` field is completely empty (0 bytes).</u> Your native SOL balance is tracked in the account's metadata header, not inside this data buffer.
->      - <b>Data Accounts (PDAs & Token Accounts)</b>: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet <u>address, and your current token balance</u>.
+>      - <b>Data Accounts (PDAs & Token Accounts)</b>: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet address, and your current token balance.
 >        <div className="pl-8">
 >          <div>
 >            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
@@ -79,7 +79,7 @@ sidebarTitle: "1.0 - Accounts"
 >             3. The program verifies that the provided Data Account address matches the expected PDA derivation (confirming it is the correct account).
 >             4. Because the program is the official owner of that Data Account, the runtime grants the program write-access to update the level in the Data Account's data buffer.
 >          </Accordion>
->          <div className="-mt-[14px] md:-mt-[14px]">
+>          <div className="-mt-[14px] md:-mt-[14px] -mb-2">
 >            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >          </div>
 >        </div>
