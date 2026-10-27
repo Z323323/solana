@@ -3,9 +3,9 @@
   "theme": "almond",
   "name": "The Solana Book for Rust Purists",
   "colors": {
-    "primary": "#9945ff",
-    "light": "#14f195",
-    "dark": "#9945ff"
+    "primary": "#3C5FD3",
+    "light": "#07A6AE",
+    "dark": "#3C5FD3"
   },
   "contextual": {
     "options": [
@@ -52,12 +52,13 @@
           ]
       },
       {
-        "group": "Concepts",
+        "group": "Core Concepts",
         "icon": "graduation-cap",
         "pages": [
           {
           "group": "Ch. 1 - Accounts",
           "pages": [
+            "chapters/ch-1/accounts",
             "chapters/ch-1/account-structure",
             "chapters/ch-1/account-types",
             "chapters/ch-1/modification-rules",

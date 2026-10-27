@@ -1,7 +1,7 @@
 /* style.css */
 
 #content-container {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), linear-gradient(45deg, #9945FF 0%, #763ADF 25%, #0284C7 50%, #0CC894 75%, #14F195 100%) !important;
+  background-image: linear-gradient(rgba(243, 245, 239, 0.5), rgba(243, 245, 239, 0.5)), linear-gradient(45deg, #9945FF 0%, #763ADF 25%, #0284C7 50%, #0CC894 75%, #14F195 100%) !important;
   background-attachment: fixed !important;
 }
 
@@ -37,28 +37,201 @@ u {
   border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent);
 }
 
-/* Backticks */
-html .prose :not(pre) > code,
-html :not(pre) > code {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+/*
+--- ---
+*/
+
+/* Light Mode (Identical to your original settings) */
+html:not(.dark) .prose :not(pre) > code,
+html:not(.dark) :not(pre) > code {
+  background-color: rgb(255 255 255 / 10%) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Ultra-translucent Callout Containers (<Info>, <Note>, <Tip>, <Warning>) */
-html .callout,
-html [data-callout],
-html div[class*="callout"],
-html div[role="alert"] {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+html:not(.dark) .callout,
+html:not(.dark) [data-callout],
+html:not(.dark) div[class*="callout"],
+html:not(.dark) div[role="alert"] {
+  background-color: rgb(255 255 255 / 10%) !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Outer Code Window: Glassmorphism */
-html .code-block,
-html .code-group {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+/* Dark Mode (Opacity reduced to 5% to fix text legibility) */
+html.dark .prose :not(pre) > code,
+html.dark :not(pre) > code {
+  background-color: rgb(255 255 255 / 5%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+html.dark .callout,
+html.dark [data-callout],
+html.dark div[class*="callout"],
+html.dark div[role="alert"] {
+  background-color: rgb(255 255 255 / 5%) !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
+
+/* --- Dark Mode: Callout Hover State --- */
+html.dark .callout:hover,
+html.dark [data-callout]:hover,
+html.dark div[class*="callout"]:hover,
+html.dark div[role="alert"]:hover {
+  background-color: rgb(255 255 255 / 1%) !important;
+}
+
+/*
+--- ---
+*/
+
+/* 
+ * BULLETPROOF TEXT COLOR INHERITANCE (v4)
+ * Usage: <div className="colored-block" style={{ color: '#07A6AE' }}>
+ */
+
+/* 1. Forza tipografia, icone e testi UI (inclusi pulsanti, didascalie immagini e titoli) a ereditare */
+html .prose .colored-block :is(
+  h1, h2, h3, h4, h5, h6, 
+  p, a, span, ul, ol, li, 
+  strong, b, em, i, 
+  blockquote, 
+  table, thead, tbody, tr, th, td, 
+  details, summary, 
+  svg, figcaption, button, label
+):not(pre):not(pre *) {
+  color: inherit !important;
+}
+
+/* 2. Forza TUTTI i div strutturali a ereditare.
+      Adesso INCLUDIAMO .code-block e i wrapper delle immagini così i titoli si colorano.
+      Il blocco <pre> (e tutto ciò che c'è dentro) viene ESCLUSO rigorosamente per salvare la sintassi! */
+html .prose .colored-block div:not(pre):not(pre *) {
+  color: inherit !important;
+}
+
+/* 3. Forza i backtick (inline code), proteggendo la sintassi colorata del <pre> */
+html .prose .colored-block code:not(pre code) {
+  color: inherit !important;
+}
+
+/* 4. EXCEPTION HANDLER: Per nidificare un colore diverso */
+/* Usage: <span className="preserve-color" style={{ color: '#FF0000' }}> */
+html .prose .colored-block .preserve-color,
+html .prose .colored-block .preserve-color :is(
+  h1, h2, h3, h4, h5, h6, p, a, span, ul, ol, li, strong, b, em, i, blockquote, table, thead, tbody, tr, th, td, details, summary, svg, figcaption, button, label
+):not(pre):not(pre *),
+html .prose .colored-block .preserve-color div:not(pre):not(pre *),
+html .prose .colored-block .preserve-color code:not(pre code) {
+  color: inherit !important;
+}
+
+/* 5. RESTORE ORIGINAL THEME: Torna ai colori nativi di Mintlify */
+/* Usage: <div className="reset-theme"> */
+html .prose .colored-block .reset-theme,
+html .prose .colored-block .reset-theme :is(
+  p, a, span, ul, ol, li, em, i, blockquote, table, tbody, tr, td, details, summary, svg, figcaption, button, label
+):not(pre):not(pre *),
+html .prose .colored-block .reset-theme div:not(pre):not(pre *),
+html .prose .colored-block .reset-theme code:not(pre code) {
+  color: var(--tw-prose-body) !important;
+}
+
+html .prose .colored-block .reset-theme :is(h1, h2, h3, h4, h5, h6, strong, b, thead, th):not(pre):not(pre *) {
+  color: var(--tw-prose-headings) !important;
+}
+
+/*
+--- ---
+*/
+
+/* Light Mode Accordions */
+html:not(.dark) details,
+html:not(.dark) .accordion,
+html:not(.dark) [data-accordion],
+html:not(.dark) div[class*="accordion"] {
+  background-color: rgb(255 255 255 / 10%) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Dark Mode Accordions (Reduced opacity) */
+html.dark details,
+html.dark .accordion,
+html.dark [data-accordion],
+html.dark div[class*="accordion"] {
+  background-color: rgb(255 255 255 / 5%) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.prose details {
+    width: fit-content !important;
+    max-width: 100% !important;
+}
+
+.accordion-group {
+    width: fit-content !important;
+    max-width: 100% !important;
+}
+
+/* --- Light Mode: Accordion Hover States --- */
+
+/* 1. Prevent the main container from losing glassmorphism on hover */
+html:not(.dark) details:hover,
+html:not(.dark) .accordion:hover,
+html:not(.dark) [data-accordion]:hover,
+html:not(.dark) div[class*="accordion"]:hover {
+  background-color: rgb(255 255 255 / 10%) !important;
+}
+
+/* 2. Create the "faded white" highlight on the clickable header (10% -> 15%) */
+html:not(.dark) details summary:hover,
+html:not(.dark) .accordion summary:hover,
+html:not(.dark) [data-accordion] summary:hover {
+  background-color: rgb(255 255 255 / 15%) !important;
+  transition: background-color 0.2s ease-in-out !important;
+}
+
+/* --- Dark Mode: Accordion Hover States (Reduced Opacity) --- */
+
+html.dark details:hover,
+html.dark .accordion:hover,
+html.dark [data-accordion]:hover,
+html.dark div[class*="accordion"]:hover {
+  background-color: rgb(255 255 255 / 1%) !important;
+}
+
+html.dark details summary:hover,
+html.dark .accordion summary:hover,
+html.dark [data-accordion] summary:hover {
+  background-color: rgb(255 255 255 / 1%) !important;
+  transition: background-color 0.2s ease-in-out !important;
+}
+
+/*
+---
+*/
+
+/* Light Mode Code Blocks */
+html:not(.dark) .code-block,
+html:not(.dark) .code-group {
+  background-color: rgb(255 255 255 / 10%) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Dark Mode Code Blocks (Reduced opacity) */
+html.dark .code-block,
+html.dark .code-group {
+  background-color: rgb(255 255 255 / 5%) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* --- Dark Mode: Code Blocks and Inline Code Hover State --- */
+html.dark .code-block:hover,
+html.dark .code-group:hover {
+  background-color: rgb(255 255 255 / 1%) !important;
+}
+
+/*
+--- ---
+*/
 
 html body .code-block :is(div, pre, code, .shiki),
 html body .code-group :is(div, pre, code, .shiki) {
@@ -126,12 +299,35 @@ html:not(.dark) .code-group pre span {
   opacity: 1 !important;
 }
 
+/* 1. Force the table to stop stretching */
+.prose table {
+    table-layout: auto !important;
+}
+
+/* 2. Squeeze every single column to its absolute minimum width */
+.prose th, 
+.prose td {
+    min-width: 5rem !important; /* Kills any hidden Mintlify minimums */
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+/* Impedisci la spezzatura delle parole nelle tabelle */
+.prose table th,
+.prose table td,
+.prose table th *,
+.prose table td * {
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  word-wrap: normal !important;
+  hyphens: none !important;
+}
+
 footer::after {
   content: "With 💜 by Z561";
   display: block;
   font-size: 0.875rem;
-  font-weight: 500;
-  color: #9CA3AF;
+  font-weight: 600;
 }
 
 .dark footer::after {
