@@ -55,7 +55,7 @@ sidebarTitle: "1.0 - Accounts"
 >      - <b>System Accounts (Standard Wallets)</b>: <u>The `data` field is completely empty (0 bytes).</u> Your native SOL balance is tracked in the account's metadata header, not inside this data buffer.
 >      - <b>Data Accounts (PDAs & Token Accounts)</b>: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet <u>address, and your current token balance</u>.
 >        <div className="relative pl-8">
->          <div style={{ lineHeight: "11px", marginBottom: "8px" }}>
+>          <div style={{ lineHeight: "11px", marginBottom: "7px" }}>
 >            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >          </div>
 >          <Accordion title="Program-Derived Data Accounts">
@@ -84,7 +84,7 @@ sidebarTitle: "1.0 - Accounts"
 >          </div>
 >        </div>
 >      - <b>Program Accounts (Smart Contracts)</b>: <u>The field holds active executable bytecode. When you deploy a program, the compiled sBPF binary (the _.so_ file) is stored directly inside this data buffer so the network can execute it.</u><br />
->        <div style={{ lineHeight: "9px", marginBottom: "9px" }}>
+>        <div style={{ lineHeight: "11px", marginBottom: "7px" }}>
 >          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >        </div>
 >        <Accordion title="Solana Program Account Structure and BPF Upgradeable Loader Architecture">
