@@ -46,16 +46,16 @@ sidebarTitle: "1.0 - Accounts"
 >    </div>
 >  </div>
 >  <div className="colored-block relative pl-8 text-[#3C5FD3] dark:text-[#07A6AE]">
->    <span className="absolute left-0 top-0">└─●</span>
+>    <span className="absolute left-0 top-0">└─</span>
 >    <div>
 >    - `lamports`: The balance of SOL held by the account. A lamport is the smallest fractional unit of SOL.
 >      - $1\text{ lamport} = 0.00\text{\_}000\text{\_}000\text{\_}1\text{ SOL} = 1 \cdot 10^{- 9}\text{ SOL.}$
 >      - $1\text{ SOL} = 1\text{\_}000\text{\_}000\text{\_}000\text{ lamports} = 1 \cdot 10^{9}\text{ lamports.}$
 >    - <div className="reset-theme">`data`: **Account state** or **program bytecode**. Max 10 MiB. Owner-writable only.</div>
 >      - <b>System Accounts (Standard Wallets)</b>: <u>The `data` field is completely empty (0 bytes).</u> Your native SOL balance is tracked in the account's metadata header, not inside this data buffer.
->      - <b>Data Accounts (PDAs & Token Accounts)</b>: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet address, and your current token balance.
+>      - <b>Data Accounts (PDAs & Token Accounts)</b>: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet <u>address, and your current token balance</u>.
 >        <div className="relative pl-8">
->          <div style={{ lineHeight: "9px", marginBottom: "10px" }}>
+>          <div style={{ lineHeight: "9px", marginBottom: "9px" }}>
 >            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >          </div>
 >          <Accordion title="Program-Derived Data Accounts">
@@ -84,7 +84,7 @@ sidebarTitle: "1.0 - Accounts"
 >          </div>
 >        </div>
 >      - <b>Program Accounts (Smart Contracts)</b>: <u>The field holds active executable bytecode. When you deploy a program, the compiled sBPF binary (the _.so_ file) is stored directly inside this data buffer so the network can execute it.</u><br />
->        <div style={{ lineHeight: "9px", marginBottom: "10px" }}>
+>        <div style={{ lineHeight: "9px", marginBottom: "9px" }}>
 >          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >        </div>
 >        <Accordion title="Solana Program Account Structure and BPF Upgradeable Loader Architecture">
@@ -239,7 +239,7 @@ sidebarTitle: "1.0 - Accounts"
 >  </div>
 >- **Account storage**: Every account must hold a refundable minimum lamport balance proportional to its data size to remain onchain.
 >  <div className="relative pl-8 text-[#3C5FD3] dark:text-[#07A6AE]">
->    <span className="absolute left-0 top-0">└─●</span>
+>    <span className="absolute left-0 top-0">└─</span>
 >    <div>
 >    - <b>The Zero-Cost State Attack Vector</b>: If creating persistent on-chain state only incurred a one-time transaction fee (a fraction of a cent), an attacker with a few hundred dollars could issue millions of instructions allocating maximum-size accounts. Because blockchain storage is permanent by default, those bytes cannot be garbage-collected without a protocol-level rule. The attacker would pay once, but every validator on the network would be forced to carry that payload indefinitely.
 >    - <b>RAM Saturation and Out-Of-Memory (OOM) Crashes</b>: Solana is engineered around sub-second finality and around 200ms slot times. To achieve parallel transaction execution via the Sealevel runtime, the validator engine cannot afford slow random disk lookups:
