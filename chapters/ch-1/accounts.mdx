@@ -49,8 +49,8 @@ sidebarTitle: "1.0 - Accounts"
 >    <span className="absolute left-0 top-0">↳</span>
 >    <div>
 >    - `lamports`: The balance of SOL held by the account. A lamport is the smallest fractional unit of SOL.
->      - $1\text{ lamport} = 0.00\text{\_}000\text{\_}000\text{\_}1\text{ SOL} = 1 \cdot 10^{- 9}\text{ SOL}$.
->      - $1\text{ SOL} = 1\text{\_}000\text{\_}000\text{\_}000\text{ lamports} = 1 \cdot 10^{9}\text{ lamports}$.
+>      - $1\text{ lamport} = 0.00\text{\_}000\text{\_}000\text{\_}1\text{ SOL} = 1 \cdot 10^{- 9}\text{ SOL.}$
+>      - $1\text{ SOL} = 1\text{\_}000\text{\_}000\text{\_}000\text{ lamports} = 1 \cdot 10^{9}\text{ lamports.}$
 >    - <div className="reset-theme">`data`: **Account state** or **program bytecode**. Max 10 MiB. Owner-writable only.</div>
 >      - <b>System Accounts (Standard Wallets)</b>: <u>The `data` field is completely empty (0 bytes).</u> Your native SOL balance is tracked in the account's metadata header, not inside this data buffer.
 >      - <b>Data Accounts (PDAs & Token Accounts)</b>: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet address, and your current token balance.
