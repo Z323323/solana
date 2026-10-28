@@ -10,6 +10,18 @@ html.dark #content-container {
   background-attachment: fixed !important;
 }
 
+#page-context-menu button,
+#page-context-menu-button {
+  background-color: rgb(255 255 255 / 10%) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark #page-context-menu button,
+.dark #page-context-menu-button {
+  background-color: rgb(255 255 255 / 5%) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
 /* ==========================================================================
    Markdown Blockquotes (">") Border Inversion
    ========================================================================== */
