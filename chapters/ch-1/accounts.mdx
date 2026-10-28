@@ -52,38 +52,61 @@ sidebarTitle: "1.0 - Accounts"
 >      - $1\text{ lamport} = 0.00\text{\_}000\text{\_}000\text{\_}1\text{ SOL} = 1 \cdot 10^{- 9}\text{ SOL.}$
 >      - $1\text{ SOL} = 1\text{\_}000\text{\_}000\text{\_}000\text{ lamports} = 1 \cdot 10^{9}\text{ lamports.}$
 >    - <div className="reset-theme">`data`: **Account state** or **program bytecode**. Max 10 MiB. Owner-writable only.</div>
->      - <b>System Accounts (Standard Wallets)</b>: <u>The `data` field is completely empty (0 bytes).</u> Your native SOL balance is tracked in the account's metadata header, not inside this data buffer.
->      - <b>Data Accounts (PDAs & Token Accounts)</b>: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet address, and your current token balance.
+>      - **System Accounts (Standard Wallets)**: <u>The `data` field is completely empty (0 bytes).</u> Your native SOL balance is tracked in the account's metadata header, not inside this data buffer.
+>      - **Data Accounts (PDAs & Token Accounts)**: <u>The field holds passive state</u>. For example, a Token Account's `data` field stores a serialized struct containing the token mint, your wallet address, and your current token balance.
 >        <div className="pl-8">
 >          <div>
 >            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >          </div>
 >          <Accordion title="Program-Derived Data Accounts">
->          <u>In short, it either holds passive data or active code.</u> If you think about it carefully, this leads to a fundamental architectural conclusion: <u>since the `data` field can hold either account state or program bytecode, a deployed smart contract is entirely stateless. The executable bytecode is stored in one account (the <b>Program Account</b>), and the contract must necessarily store its data in entirely separate accounts (<b>Data Accounts</b>).</u>
+>          <u>In short, `data` either holds passive data or active code.</u> If you think about it carefully, this leads to a fundamental architectural conclusion: <u>since the `data` field can hold either account state or program bytecode, a deployed smart contract is entirely stateless. The executable bytecode is stored in one account (the **Program Account**), and the contract must necessarily store its data in entirely separate accounts (Data Accounts).</u>
 >          
 >          ### How a Data Account is Associated with a Program
 >
->          Because a smart contract (Program Account) is completely stateless, it needs a secure, verifiable way to connect to the separate Data Accounts that hold its state. This association is built on two pillars: Program Derived Addresses (PDAs) and Ownership.
+>          <u>Because a smart contract (Program Account) is completely stateless, it needs a secure, verifiable way to connect to the separate Data Accounts that hold its state.</u> This association is built on two pillars: Program Derived Addresses (PDAs) and Ownership.
 >          
->          1. <b>The Cryptographic Link (Deriving the Address)</b>: When a program needs to create a new Data Account (for example, to store a new player's stats), it does not generate a random private key. Instead, it derives a PDA by hashing specific "seeds" together with its own Program ID.
+>          1. **The Cryptographic Link (Deriving the Address)**: <u>When a program needs to create a new Data Account</u> (for example, to store a new player's stats), it does not generate a random private key. Instead, <u>it derives a PDA by hashing specific 'seeds' together with its own **Program ID**</u>.
 >
->             For example, a game contract might derive a Data Account address using the seeds: `["player_stats", Player_Wallet_Pubkey] + Program_ID`. Because the Program ID is mathematically baked into the address generation, this creates a deterministic, unbreakable link between the program and the data account. The program will always know exactly where to find the user's data just by re-hashing those seeds.
+>             <Info>
+>             **Program ID**
+>
+>             <u>A Program ID in Solana is the unique on-chain address</u> that identifies a program (smart contract). It tells the Solana runtime which program should execute when an instruction in a transaction targets that program. You can think of it as the equivalent of a smart contract address in Ethereum.
+>
+>             **Solana Terminology Table**
+>
+>             | Term | What It Identifies | Example |
+>             |:-----|:-------------------|:--------|
+>             | **Program ID** | A program (smart contract) | **System Program**: `11111111111111111111111111111111` |
+>             | **Account Address** | Any account on Solana | A wallet, token account, or PDA account |
+>             | **PDA** | An address derived deterministically from seeds and a Program ID | A program's user-profile address |
+>             </Info>
+>
+>             Because the Program ID is mathematically baked into the address generation, this creates a deterministic, unbreakable link between the program and the data account. The program will always know exactly where to find the user's data just by re-hashing those seeds.
 >          
->          2. <b>The Security Link (Assigning Ownership)</b>: Deriving the address is only half the process. When the program actually sends the Cross-Program Invocation (CPI) to the System Program to allocate memory for this new Data Account, it explicitly sets the owner field of that new account to its own Program ID.
+>          2. **The Security Link (Assigning Ownership)**: Deriving the address is only half the process. <u>When the program actually sends the Cross-Program Invocation (**CPI**) to the System Program to allocate memory for this new Data Account, it explicitly sets the `owner` field of that new account to its own Program ID.</u>
 >             
->             This locks the association at the runtime level. Once the Data Account is created with the program assigned as the owner, the Solana operating system enforces the rule that only that specific program can ever write to or modify the data field of that account.
->          
->          3. <b>The Execution Flow</b>: When a user wants to interact with the contract (e.g., 'Level up my character'):
->             1. The user sends a transaction to the Program Account.
->             2. The user includes the derived Data Account in the transaction instructions.
+>             This locks the association at the runtime level. Once the Data Account is created with the program assigned as the owner, the Solana operating system enforces the rule that <u>only that specific program can ever write to or modify the `data` field of that account</u>.
+>          <Note>
+>          **The Execution Flow**
+>
+>          When a user wants to interact with the contract:
+>             1. The user sends a transaction to the Program Account (the smart contract).
+>             2. <u>The user includes the derived Data Account in the transaction instructions.</u> This is a fundamental architectural difference between Solana and Ethereum. <u>On Solana, programs operate on accounts explicitly supplied in advance.</u> On Ethereum, a smart contract can access its own persistent storage directly through the EVM without requiring the caller to supply individual storage slots or accounts as instruction parameters.
+>                <div>
+>                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
+>                </div>
+>                <Accordion title="Solana’s Account Model">
+>
+>                </Accordion>
 >             3. The program verifies that the provided Data Account address matches the expected PDA derivation (confirming it is the correct account).
 >             4. Because the program is the official owner of that Data Account, the runtime grants the program write-access to update the level in the Data Account's data buffer.
+>          </Note>
 >          </Accordion>
 >          <div className="-mt-[14px] max-md:-mt-[11px] -mb-2">
 >            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >          </div>
 >        </div>
->      - <b>Program Accounts (Smart Contracts)</b>: <u>The field holds active executable bytecode. When you deploy a program, the compiled sBPF binary (the _.so_ file) is stored directly inside this data buffer so the network can execute it.</u>
+>      - <b>Program Accounts (Smart Contracts)</b>: <u>The field holds active executable bytecode. When you deploy a program, the compiled **sBPF** binary (the _.so_ file) is stored directly inside this data buffer so the network can execute it.</u>
 >        <div>
 >          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
 >        </div>
@@ -123,7 +146,6 @@ sidebarTitle: "1.0 - Accounts"
 >  </div>
 >
 > - **Address**: Each account is identified by a unique 32-byte address (either an **Ed25519** public key or a PDA), <u>displayed as a **Base58**-encoded string</u>.
->
 > <div className="colored-block relative pl-8 text-[#3C5FD3] dark:text-[#07A6AE]">
 >   <span className="absolute left-0 top-0">└─</span>
 >   <div>
@@ -172,39 +194,41 @@ sidebarTitle: "1.0 - Accounts"
 >     </Accordion>
 >   </div>
 > </div>
+> <div className="relative pl-8">
+>   <span className="absolute left-0 top-0">└──</span>
+>   <div>
+>   - **Public Key**: Corresponds to an Ed25519 keypair (<u>has a private key</u>).
 >
->     - **Public Key**: Corresponds to an Ed25519 keypair (<u>has a private key</u>).
+>     <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
+>       {/* The Unified Outer Box */}
+>       <div 
+>         className="rounded-xl flex flex-col bg-white/10 dark:bg-white/5 backdrop-blur-md" 
+>         style={{ 
+>           width: '80%', 
+>           border: '1px solid rgba(255, 255, 255, 0.2)',
+>           padding: '1.25rem'
+>         }}>
 >
->         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
->           {/* The Unified Outer Box */}
->           <div 
->             className="rounded-xl flex flex-col bg-white/10 dark:bg-white/5 backdrop-blur-md" 
->             style={{ 
->               width: '80%', 
->               border: '1px solid rgba(255, 255, 255, 0.2)',
->               padding: '1.25rem'
->             }}>
->
->             {/* Transparent Title Area */}
->             <div 
->               className="text-sm font-medium" 
->               style={{ 
->                 paddingBottom: '1.25rem',
->                 color: 'color-mix(in srgb, currentColor 100%, transparent)'
->               }}>
->               Figure 1.0.2
->             </div>
->
->             {/* The Image */}
->             <img 
->               src="/assets/images/account_address.svg" 
->               style={{ width: '100%', margin: 0, display: 'block' }} 
->             />
->           </div>
+>         {/* Transparent Title Area */}
+>         <div 
+>           className="text-sm font-medium" 
+>           style={{ 
+>             paddingBottom: '1.25rem',
+>             color: 'color-mix(in srgb, currentColor 100%, transparent)'
+>           }}>
+>           Figure 1.0.2
 >         </div>
 >
->     - **Program Derived Address (PDA)**: Deterministically derived from a **Program ID** and seeds (<u>no private key</u>).
->
+>         {/* The Image */}
+>         <img 
+>           src="/assets/images/account_address.svg" 
+>           style={{ width: '100%', margin: 0, display: 'block' }} 
+>         />
+>       </div>
+>     </div>
+>   - **Program Derived Address (PDA)**: Deterministically derived from a **Program ID** and seeds (<u>no private key</u>).
+>   </div>
+> </div>
 >- **Ownership**: Only the account's owner program can modify its data or debit lamports. Any program can credit lamports to any writable account.
 >  <div className="colored-block relative pl-8 text-[#3C5FD3] dark:text-[#07A6AE]">
 >    <span className="absolute left-0 top-0">└──</span>
